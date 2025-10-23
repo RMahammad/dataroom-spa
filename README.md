@@ -2,6 +2,8 @@
 
 A modern, enterprise-grade **Data Room** application built with React 18, TypeScript, and Vite. This single-page application provides a Dropbox-style interface for managing secure document repositories with hierarchical folder structures, PDF file management, and comprehensive CRUD operations—all powered by local IndexedDB storage.
 
+**Live Demo:** [https://dataroom-spa.vercel.app/](https://dataroom-spa.vercel.app/)
+
 ## Architecture Overview
 
 This application follows a sophisticated **layered architecture** designed for maintainability, testability, and scalability:
