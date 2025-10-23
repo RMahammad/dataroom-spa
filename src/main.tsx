@@ -5,16 +5,24 @@ import { App } from "./app/App";
 import { initializeDatabase } from "./core/repos/db";
 import { useDataroomStore } from "./store/useDataroomStore";
 
-// Initialize database and load initial data
-initializeDatabase()
-  .then(() => {
-    // Load datarooms after database is initialized
-    useDataroomStore.getState().loadDatarooms();
-  })
-  .catch(console.error);
+// Initialize database and load initial data before rendering
+(async () => {
+  try {
+    // Wait for database to initialize
+    await initializeDatabase();
+    console.log("Database initialized");
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+    // Load datarooms after database is initialized
+    await useDataroomStore.getState().loadDatarooms();
+    console.log("Datarooms loaded");
+  } catch (error) {
+    console.error("Failed to initialize app:", error);
+  } finally {
+    // Render the app after initialization (or on error to show error state)
+    createRoot(document.getElementById("root")!).render(
+      <StrictMode>
+        <App />
+      </StrictMode>
+    );
+  }
+})();

@@ -256,14 +256,19 @@ const RoomBrowserPageContent = () => {
     setSelectedFile(null);
   };
 
-  // Loading state
+  // Loading state - show spinner while datarooms are loading
   if (dataroomsLoading) {
     return <LoadingSpinner />;
   }
 
-  // If dataroom doesn't exist, redirect to data rooms page
+  // If datarooms are loaded but this specific dataroom doesn't exist, redirect to home
+  if (!dataroomsLoading && !currentDataroom) {
+    return <Navigate to="/" replace />;
+  }
+
+  // Safety check - shouldn't happen but just in case
   if (!currentDataroom) {
-    return <Navigate to="/data-rooms" replace />;
+    return <LoadingSpinner />;
   }
 
   const isLoading = foldersLoading || filesLoading;
