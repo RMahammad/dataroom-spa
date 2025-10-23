@@ -46,7 +46,6 @@ graph TD
 - **Responsive Design**: Mobile-first approach with TailwindCSS
 - **Performance Optimized**: Lazy loading, virtual scrolling, and efficient data management
 - **Comprehensive Testing**: 400+ tests covering all application layers
-- **Accessibility First**: WCAG 2.1 AA compliant with keyboard navigation
 
 ## Quick Start
 
@@ -87,8 +86,6 @@ npm run lint:fix          # Auto-fix linting issues
 
 # Testing
 npm run test              # Unit & integration tests (Vitest)
-npm run test:ui           # Test UI dashboard
-npm run test:coverage     # Generate coverage report
 
 # Build & deployment
 npm run build             # Production build
@@ -113,7 +110,6 @@ npm run preview           # Preview production build
 | Technology                 | Purpose                       |
 | -------------------------- | ----------------------------- |
 | **TailwindCSS** ^4.1.15    | Utility-first CSS framework   |
-| **Lucide React** ^0.546.0  | Beautiful, customizable icons |
 | **React Hot Toast** ^2.6.0 | Elegant toast notifications   |
 
 ### File Handling
@@ -160,7 +156,6 @@ dataroom-spa/
 │   └── 📁 tests/                # Comprehensive test suite
 ├── 📁 public/                   # Static assets
 ├── 📄 vite.config.ts            # Vite configuration
-├── 📄 tailwind.config.js        # TailwindCSS configuration
 ├── 📄 tsconfig.json             # TypeScript configuration
 └── 📄 package.json              # Dependencies & scripts
 ```
@@ -626,4 +621,4 @@ request.onsuccess = (e) => console.log("DB:", e.target.result);
 
 ## Future Enhancements
 
-Due to time limitations, this implementation focuses on core functionality :) 
+Due to time limitations, this implementation focuses on the core functionality and architectural foundation. However, if there’s additional time or interest, I’d be happy to walk through the reasoning behind each design decision step by step — such as why certain patterns, libraries, or trade-offs were chosen. We could also extend the project with a dedicated backend (with JWT authentication, role-based access, and file versioning) and a more advanced folder management system to make it production-ready :)
