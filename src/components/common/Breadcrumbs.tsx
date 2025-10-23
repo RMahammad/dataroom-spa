@@ -60,12 +60,15 @@ export const Breadcrumbs = ({
   const breadcrumbs = buildBreadcrumbs();
 
   return (
-    <nav className="flex items-center space-x-1 text-sm text-gray-600">
+    <nav className="flex items-center space-x-0.5 sm:space-x-1 text-xs sm:text-sm text-gray-600 min-w-0">
       {breadcrumbs.map((item, index) => (
-        <div key={item.id} className="flex items-center space-x-1">
+        <div
+          key={item.id}
+          className="flex items-center space-x-0.5 sm:space-x-1 min-w-0 shrink"
+        >
           {index > 0 && (
             <svg
-              className="h-4 w-4 text-gray-400"
+              className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400 shrink-0"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -79,14 +82,14 @@ export const Breadcrumbs = ({
 
           {index === breadcrumbs.length - 1 ? (
             // Current page - not a link
-            <span className="font-medium text-gray-900 max-w-[200px] truncate">
+            <span className="font-medium text-gray-900 max-w-[120px] sm:max-w-[200px] truncate">
               {item.name}
             </span>
           ) : (
             // Clickable breadcrumb
             <Link
               to={item.path}
-              className="hover:text-blue-600 transition-colors max-w-[200px] truncate"
+              className="hover:text-blue-600 transition-colors max-w-20 sm:max-w-[150px] md:max-w-[200px] truncate shrink"
               title={item.name}
             >
               {item.name}

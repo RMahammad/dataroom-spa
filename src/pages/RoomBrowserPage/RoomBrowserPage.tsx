@@ -279,7 +279,7 @@ const RoomBrowserPageContent = () => {
         onBack={handleBack}
       />{" "}
       {/* Breadcrumbs */}
-      <div className="bg-gray-50 border-b border-gray-200 px-6 py-3">
+      <div className="bg-gray-50 border-b border-gray-200 px-3 sm:px-6 py-2 sm:py-3 overflow-x-auto">
         <Breadcrumbs
           dataroomName={currentDataroom.name}
           dataroomId={dataroomId!}
@@ -288,9 +288,9 @@ const RoomBrowserPageContent = () => {
         />
       </div>
       {/* Content Area */}
-      <div className="flex-1 bg-gray-50 p-6">
+      <div className="flex-1 bg-gray-50 p-3 sm:p-6">
         {/* Upload Dropzone - Available at root level and inside folders */}
-        <div className="mb-6">
+        <div className="mb-4 sm:mb-6">
           <UploadDropzone
             onUpload={handleUpload}
             isUploading={isLoading}
@@ -303,15 +303,15 @@ const RoomBrowserPageContent = () => {
         {/* Files and Folders List */}
         <div className="">
           {isLoading ? (
-            <div className="flex justify-center py-12">
+            <div className="flex justify-center py-8 sm:py-12">
               <LoadingSpinner />
             </div>
           ) : (
             <div className="divide-y divide-gray-200">
               {folders.length === 0 && files.length === 0 ? (
-                <div className="text-center py-12">
+                <div className="text-center py-8 sm:py-12 px-4">
                   <svg
-                    className="mx-auto h-12 w-12 text-gray-400"
+                    className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -323,17 +323,17 @@ const RoomBrowserPageContent = () => {
                       d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-5l-2-2H5a2 2 0 00-2 2z"
                     />
                   </svg>
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">
+                  <h3 className="mt-2 text-sm sm:text-base font-medium text-gray-900">
                     No items
                   </h3>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-xs sm:text-sm text-gray-500">
                     {folderId
                       ? "This folder is empty. Create a new folder or upload files to get started."
                       : "This data room is empty. Create a new folder or upload files to get started."}
                   </p>
                 </div>
               ) : (
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2 sm:gap-3">
                   {folders.map((folder) => (
                     <EntryItem
                       key={folder.id}

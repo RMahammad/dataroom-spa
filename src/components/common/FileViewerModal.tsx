@@ -71,24 +71,26 @@ export const FileViewerModal = ({
 
   return (
     <Modal
-      maxWidth="max-w-5xl"
+      maxWidth="max-w-full sm:max-w-5xl"
       isOpen={isOpen}
       onClose={handleClose}
       title={file.name}
     >
-      <div className="max-w-5xl w-full h-[80vh]">
+      <div className="w-full h-[60vh] sm:h-[70vh] md:h-[80vh]">
         {loading && (
-          <div className="flex items-center justify-center h-full">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <span className="ml-2 text-gray-600">Loading file...</span>
+          <div className="flex flex-col items-center justify-center h-full">
+            <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-blue-600"></div>
+            <span className="ml-2 text-sm sm:text-base text-gray-600 mt-2">
+              Loading file...
+            </span>
           </div>
         )}
 
         {error && (
-          <div className="flex items-center justify-center h-full">
+          <div className="flex items-center justify-center h-full px-4">
             <div className="text-center">
               <svg
-                className="mx-auto h-12 w-12 text-red-400"
+                className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-red-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -100,24 +102,24 @@ export const FileViewerModal = ({
                   d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <h3 className="mt-2 text-sm font-medium text-gray-900">
+              <h3 className="mt-2 text-sm sm:text-base font-medium text-gray-900">
                 Error loading file
               </h3>
-              <p className="mt-1 text-sm text-gray-500">{error}</p>
+              <p className="mt-1 text-xs sm:text-sm text-gray-500">{error}</p>
             </div>
           </div>
         )}
 
         {blobUrl && !loading && !error && (
           <iframe
-            src={`${blobUrl}#toolbar=1&navpanes=1&scrollbar=1`}
+            src={`${blobUrl}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
             className="w-full h-full border border-gray-300 rounded-lg"
             title={`PDF Viewer - ${file.name}`}
           />
         )}
 
         {/* Footer with file info */}
-        <div className="mt-4 flex items-center justify-between text-sm text-gray-500 border-t pt-4">
+        <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs sm:text-sm text-gray-500 border-t pt-3 sm:pt-4">
           <div>
             <span className="font-medium">Size:</span>{" "}
             {formatFileSize(file.size)}

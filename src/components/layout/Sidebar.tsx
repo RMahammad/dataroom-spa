@@ -3,10 +3,21 @@ import { useEffect } from "react";
 import { useDataroom } from "../../hooks/useDataroom";
 import { useUIStore } from "../../store/useUIStore";
 
-export const Sidebar = () => {
+interface SidebarProps {
+  onClose?: () => void;
+}
+
+export const Sidebar = ({ onClose }: SidebarProps) => {
   const location = useLocation();
   const { datarooms, loadDatarooms, isLoading } = useDataroom();
   const { openCreateRoomModal } = useUIStore();
+
+  const handleLinkClick = () => {
+    // Close sidebar on mobile when a link is clicked
+    if (onClose) {
+      onClose();
+    }
+  };
 
   useEffect(() => {
     loadDatarooms();
@@ -15,14 +26,35 @@ export const Sidebar = () => {
   return (
     <div className="h-full flex flex-col">
       {/* Logo/Brand */}
-      <div className="h-16 flex items-center px-4 border-b border-gray-200 shrink-0">
+      <div className="h-14 sm:h-16 flex items-center justify-between px-4 border-b border-gray-200 shrink-0">
         <h2 className="text-lg font-semibold text-gray-900">DataRoom</h2>
+        {/* Close button for mobile */}
+        <button
+          onClick={onClose}
+          className="lg:hidden p-2 -mr-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
+          aria-label="Close sidebar"
+        >
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         <Link
           to="/"
+          onClick={handleLinkClick}
           className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
             location.pathname === "/"
               ? "bg-blue-50 text-blue-700"
@@ -68,6 +100,7 @@ export const Sidebar = () => {
                 <Link
                   key={room.id}
                   to={`/datarooms/${room.id}`}
+                  onClick={handleLinkClick}
                   className={
                     location.pathname.startsWith(`/datarooms/${room.id}`)
                       ? "flex items-center px-3 py-2 text-sm font-medium rounded-md bg-blue-100 text-blue-700"
@@ -91,6 +124,7 @@ export const Sidebar = () => {
             {datarooms.length > 8 && (
               <Link
                 to="/"
+                onClick={handleLinkClick}
                 className="block px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
               >
                 + {datarooms.length - 8} more rooms

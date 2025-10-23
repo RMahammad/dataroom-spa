@@ -111,29 +111,30 @@ export const EntryItem = ({
       <Link
         to={isFolder ? getNavigationPath() : "#"}
         onClick={isFile ? handleMainClick : undefined}
-        className="group relative block p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-md transition-all duration-200"
+        className="group relative block p-3 sm:p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-md transition-all duration-200"
       >
         {/* Content */}
-        <div className="flex items-start justify-between mb-3">
+        <div className="flex items-start justify-between mb-2 sm:mb-3">
           <div className="flex items-center min-w-0 flex-1">
-            <div className="shrink-0 mr-3">{getItemIcon()}</div>
+            <div className="shrink-0 mr-2 sm:mr-3">{getItemIcon()}</div>
             <div className="min-w-0 flex-1">
-              <h3 className="text-sm font-medium text-gray-900 truncate group-hover:text-blue-600 transition-colors">
+              <h3 className="text-xs sm:text-sm font-medium text-gray-900 truncate group-hover:text-blue-600 transition-colors">
                 {item.name}
               </h3>
             </div>
           </div>
 
-          {/* Actions menu */}
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="flex space-x-1">
+          {/* Actions menu - always visible on mobile, hover on desktop */}
+          <div className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity ml-2">
+            <div className="flex space-x-0.5 sm:space-x-1">
               <button
                 onClick={handleRename}
-                className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                className="p-1 text-gray-400 hover:text-blue-600 active:text-blue-700 transition-colors touch-manipulation"
                 title="Rename"
+                aria-label="Rename"
               >
                 <svg
-                  className="h-4 w-4"
+                  className="h-3.5 w-3.5 sm:h-4 sm:w-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -149,11 +150,12 @@ export const EntryItem = ({
               {isFile && onDownload && (
                 <button
                   onClick={handleDownload}
-                  className="p-1 text-gray-400 hover:text-green-600 transition-colors"
+                  className="p-1 text-gray-400 hover:text-green-600 active:text-green-700 transition-colors touch-manipulation"
                   title="Download"
+                  aria-label="Download"
                 >
                   <svg
-                    className="h-4 w-4"
+                    className="h-3.5 w-3.5 sm:h-4 sm:w-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -169,11 +171,12 @@ export const EntryItem = ({
               )}
               <button
                 onClick={handleDelete}
-                className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                className="p-1 text-gray-400 hover:text-red-600 active:text-red-700 transition-colors touch-manipulation"
                 title="Delete"
+                aria-label="Delete"
               >
                 <svg
-                  className="h-4 w-4"
+                  className="h-3.5 w-3.5 sm:h-4 sm:w-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -191,22 +194,26 @@ export const EntryItem = ({
         </div>
 
         {/* Details */}
-        <div className="space-y-1 text-xs text-gray-500">
+        <div className="space-y-0.5 sm:space-y-1 text-[10px] sm:text-xs text-gray-500">
           {isFile && (
             <div className="flex justify-between">
               <span>Size:</span>
-              <span>{formatFileSize((item as FileObject).size)}</span>
+              <span className="font-medium">
+                {formatFileSize((item as FileObject).size)}
+              </span>
             </div>
           )}
           {isFolder && folderSize !== undefined && (
             <div className="flex justify-between">
               <span>Size:</span>
-              <span>{formatFileSize(folderSize)}</span>
+              <span className="font-medium">{formatFileSize(folderSize)}</span>
             </div>
           )}
           <div className="flex justify-between">
             <span>Modified:</span>
-            <span>{formatDate(item.updatedAt)}</span>
+            <span className="font-medium truncate ml-2">
+              {formatDate(item.updatedAt)}
+            </span>
           </div>
         </div>
       </Link>
@@ -218,39 +225,47 @@ export const EntryItem = ({
     <Link
       to={isFolder ? getNavigationPath() : "#"}
       onClick={isFile ? handleMainClick : undefined}
-      className="group flex items-center px-4 py-3 bg-white hover:bg-gray-50 border-b border-gray-200 transition-colors"
+      className="group flex items-center px-3 sm:px-4 py-2.5 sm:py-3 bg-white hover:bg-gray-50 border-b border-gray-200 transition-colors"
     >
-      <div className="shrink-0 mr-3">{getItemIcon()}</div>
+      <div className="shrink-0 mr-2 sm:mr-3">{getItemIcon()}</div>
 
-      <div className="flex-1 min-w-0 mr-4">
-        <p className="text-sm font-medium text-gray-900 truncate group-hover:text-blue-600 transition-colors">
+      <div className="flex-1 min-w-0 mr-2 sm:mr-4">
+        <p className="text-xs sm:text-sm font-medium text-gray-900 truncate group-hover:text-blue-600 transition-colors">
           {item.name}
         </p>
       </div>
 
-      <div className="shrink-0 flex items-center space-x-4 text-xs text-gray-500">
-        {isFile && (
-          <span className="w-16 text-right">
-            {formatFileSize((item as FileObject).size)}
+      <div className="shrink-0 flex items-center gap-2 sm:gap-4 text-[10px] sm:text-xs text-gray-500">
+        {/* Size - hidden on small screens in favor of actions */}
+        <div className="hidden md:flex items-center gap-4">
+          {isFile && (
+            <span className="w-16 text-right">
+              {formatFileSize((item as FileObject).size)}
+            </span>
+          )}
+          {isFolder && folderSize !== undefined && (
+            <span className="w-16 text-right">
+              {formatFileSize(folderSize)}
+            </span>
+          )}
+          {isFolder && folderSize === undefined && (
+            <span className="w-16 text-right">-</span>
+          )}
+          <span className="w-24 text-right hidden lg:inline">
+            {formatDate(item.updatedAt)}
           </span>
-        )}
-        {isFolder && folderSize !== undefined && (
-          <span className="w-16 text-right">{formatFileSize(folderSize)}</span>
-        )}
-        {isFolder && folderSize === undefined && (
-          <span className="w-16 text-right">-</span>
-        )}
-        <span className="w-24 text-right">{formatDate(item.updatedAt)}</span>
+        </div>
 
-        {/* Actions */}
-        <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* Actions - always visible on mobile */}
+        <div className="flex space-x-0.5 sm:space-x-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
           <button
             onClick={handleRename}
-            className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+            className="p-1 text-gray-400 hover:text-blue-600 active:text-blue-700 transition-colors touch-manipulation"
             title="Rename"
+            aria-label="Rename"
           >
             <svg
-              className="h-4 w-4"
+              className="h-3.5 w-3.5 sm:h-4 sm:w-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -266,11 +281,12 @@ export const EntryItem = ({
           {isFile && onDownload && (
             <button
               onClick={handleDownload}
-              className="p-1 text-gray-400 hover:text-green-600 transition-colors"
+              className="p-1 text-gray-400 hover:text-green-600 active:text-green-700 transition-colors touch-manipulation"
               title="Download"
+              aria-label="Download"
             >
               <svg
-                className="h-4 w-4"
+                className="h-3.5 w-3.5 sm:h-4 sm:w-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -286,11 +302,12 @@ export const EntryItem = ({
           )}
           <button
             onClick={handleDelete}
-            className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+            className="p-1 text-gray-400 hover:text-red-600 active:text-red-700 transition-colors touch-manipulation"
             title="Delete"
+            aria-label="Delete"
           >
             <svg
-              className="h-4 w-4"
+              className="h-3.5 w-3.5 sm:h-4 sm:w-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

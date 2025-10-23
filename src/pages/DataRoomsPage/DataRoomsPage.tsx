@@ -59,13 +59,15 @@ const DataRoomsPageContent = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">Data Rooms</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">
+          Data Rooms
+        </h1>
         <button
           onClick={openCreateRoomModal}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
         >
           <svg
             className="w-4 h-4"
@@ -80,19 +82,20 @@ const DataRoomsPageContent = () => {
               d="M12 4v16m8-8H4"
             />
           </svg>
-          Create Data Room
+          <span className="hidden sm:inline">Create Data Room</span>
+          <span className="sm:hidden">Create Room</span>
         </button>
       </div>
 
       {/* Search and Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div className="relative flex-1 max-w-md">
+      <div className="flex flex-col md:flex-row justify-between gap-3 mb-4 sm:mb-6">
+        <div className="relative flex-1 sm:max-w-md">
           <input
             type="text"
             placeholder="Search data rooms..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full pl-10 pr-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
           <svg
             className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
@@ -109,10 +112,12 @@ const DataRoomsPageContent = () => {
           </svg>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between sm:justify-start gap-3">
           {/* Sort Dropdown */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">Sort by:</span>
+          <div className="flex items-center gap-2 flex-1 sm:flex-initial">
+            <span className="text-xs sm:text-sm text-gray-600 hidden sm:inline">
+              Sort by:
+            </span>
             <select
               value={`${sortBy}-${sortOrder}`}
               onChange={(e) => {
@@ -122,7 +127,7 @@ const DataRoomsPageContent = () => {
                   order as "asc" | "desc"
                 );
               }}
-              className="text-sm border border-gray-300 rounded px-2 py-1 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="text-xs sm:text-sm border border-gray-300 rounded px-2 py-1.5 sm:py-1 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 flex-1 sm:flex-initial"
             >
               <option value="name-asc">Name A-Z</option>
               <option value="name-desc">Name Z-A</option>
@@ -135,11 +140,12 @@ const DataRoomsPageContent = () => {
           <div className="flex rounded-lg border border-gray-300 overflow-hidden">
             <button
               onClick={() => setViewMode("grid")}
-              className={`px-3 py-2 text-sm ${
+              className={`px-2 sm:px-3 py-1.5 sm:py-2 text-sm flex items-center justify-center ${
                 viewMode === "grid"
                   ? "bg-blue-500 text-white"
                   : "bg-white text-gray-600 hover:bg-gray-50"
               } transition-colors`}
+              aria-label="Grid view"
             >
               <svg
                 className="w-4 h-4"
@@ -157,11 +163,12 @@ const DataRoomsPageContent = () => {
             </button>
             <button
               onClick={() => setViewMode("list")}
-              className={`px-3 py-2 text-sm ${
+              className={`px-2 sm:px-3 py-1.5 sm:py-2 text-sm flex items-center justify-center ${
                 viewMode === "list"
                   ? "bg-blue-500 text-white"
                   : "bg-white text-gray-600 hover:bg-gray-50"
               } transition-colors`}
+              aria-label="List view"
             >
               <svg
                 className="w-4 h-4"
@@ -256,7 +263,7 @@ const DataRoomsPageContent = () => {
         <div
           className={
             viewMode === "grid"
-              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-4"
               : "space-y-2"
           }
         >
